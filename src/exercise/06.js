@@ -4,29 +4,31 @@
 import React from 'react'
 
 function UsernameForm({onSubmitUsername}) {
-  const [error, setError] = React.useState(null)
+  const [username, setUsername] = React.useState('')
   // 🐨 add a submit event handler here (`handleSubmit`).
   const handleSubmit = event => {
     event.preventDefault()
-    onSubmitUsername(event.target.elements.usernameInput.value)
+    onSubmitUsername(username)
   }
 
   const handleChange = event => {
     const {value} = event.target
-    const isLowerCase = value === value.toLowerCase()
-    setError(isLowerCase ? null : 'Username must be lower case')
+    setUsername(value.toLowerCase())
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="usernameInput">Username:</label>
-        <input id="usernameInput" type="text" onChange={handleChange} />
+        <input
+          id="usernameInput"
+          type="text"
+          onChange={handleChange}
+          value={username}
+          placeholder="Enter username"
+        />
       </div>
-      <span style={{color: 'red'}}>{error}</span>
-      <button disabled={error} type="submit">
-        Submit
-      </button>
+      <button type="submit">Submit</button>
     </form>
   )
 }
